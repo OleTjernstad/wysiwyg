@@ -139,7 +139,6 @@ const Hello = () => {
         }}
         modules={modules}
         formats={formats}
-        theme="snow"
         value={value}
         onChange={setValue}
       />
