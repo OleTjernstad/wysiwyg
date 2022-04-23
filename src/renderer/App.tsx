@@ -1,13 +1,21 @@
 import './App.css';
 import 'react-quill/dist/quill.snow.css';
 
-import React, { useRef, useState } from 'react';
 import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 
 import ReactQuill from 'react-quill';
+import { useEffect, useState } from 'react';
+
+const { electron } = window;
 
 const Hello = () => {
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    electron.ipcRenderer.on('new-file', (fileContent) => {
+      setValue(String(fileContent));
+    });
+  }, []);
 
   return (
     <div
@@ -21,6 +29,7 @@ const Hello = () => {
           color: 'black',
           backgroundColor: 'white',
           maxHeight: '90vh',
+          height: '90vh',
           overflow: 'auto',
           margin: 10,
           marginTop: 20,
