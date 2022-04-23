@@ -17,3 +17,21 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.ql-toolbar {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+  background: linear-gradient(
+    200.96deg,
+    #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35%
+  );
+  z-index: 999;
+}
+
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  padding-top: 40px;
+}

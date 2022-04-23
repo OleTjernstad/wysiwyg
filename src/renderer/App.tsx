@@ -31,8 +31,6 @@ const Hello = () => {
           maxHeight: '90vh',
           height: '90vh',
           overflow: 'auto',
-          margin: 10,
-          marginTop: 20,
         }}
         theme="snow"
         value={value}
