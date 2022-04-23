@@ -1,0 +1,6 @@
+.ql-toolbar {
+  width: 100vw;
+  background: linear-gradient(200.96deg, #f76cc6 51.77%, #c471f2 109.35%);
+  z-index: 999;
+  margin-top: 5px;
+}

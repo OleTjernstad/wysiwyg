@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import 'react-quill/dist/quill.snow.css';
+import '../style/Editor.css';
 
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
@@ -60,18 +61,18 @@ const CustomToolbar = () => (
     <select className="ql-header" defaultValue="" onChange={(e) => e.persist()}>
       <option value="1" />
       <option value="2" />
-      <option selected />
+      <option />
     </select>
     <button type="button" className="ql-bold" />
     <button type="button" className="ql-italic" />
-    <select className="ql-color">
+    <select className="ql-color" defaultValue="">
       <option value="red" />
       <option value="green" />
       <option value="blue" />
       <option value="orange" />
       <option value="violet" />
       <option value="#d0d1d2" />
-      <option selected />
+      <option />
     </select>
     <button type="button" className="ql-insertStar">
       <CustomButton />
