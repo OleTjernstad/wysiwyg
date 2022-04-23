@@ -8,6 +8,30 @@ import { useEffect, useState } from 'react';
 
 const { electron } = window;
 
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['link', 'image'],
+    ['clean'],
+  ],
+};
+
+const formats = [
+  'header',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+];
+
 const Hello = () => {
   const [value, setValue] = useState('');
 
@@ -32,6 +56,8 @@ const Hello = () => {
           height: '90vh',
           overflow: 'auto',
         }}
+        modules={modules}
+        formats={formats}
         theme="snow"
         value={value}
         onChange={setValue}
