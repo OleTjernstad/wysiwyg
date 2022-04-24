@@ -1,6 +1,16 @@
-import Editor from 'renderer/components/Editor';
+import { useEffect, useState } from 'react';
+import Editor from '../components/editor/index';
+
+const { electron } = window;
 
 export default function EditorScreen() {
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    electron.ipcRenderer.on('new-file', (fileContent) => {
+      setValue(String(fileContent));
+    });
+  }, []);
   return (
     <div
       style={{
@@ -8,7 +18,7 @@ export default function EditorScreen() {
         height: '100vh',
       }}
     >
-      <Editor />
+      <Editor defaultData={value} />
     </div>
   );
 }
