@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import 'react-quill/dist/quill.snow.css';
 import '../style/Editor.css';
-
+import SyntaxHighlighter from 'react-syntax-highlighter';
 import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { QuillFuncs } from 'renderer/contracts/Editor';
+import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import { html } from 'js-beautify';
 
 const { electron } = window;
 
@@ -65,6 +68,7 @@ const CustomToolbar = () => (
     </select>
     <button type="button" className="ql-bold" />
     <button type="button" className="ql-italic" />
+    <button type="button" className="ql-strike" />
     <select className="ql-color" defaultValue="">
       <option value="red" />
       <option value="green" />
@@ -96,7 +100,7 @@ export default function Editor() {
           color: 'black',
           backgroundColor: 'white',
           maxHeight: '90vh',
-          height: '90vh',
+          height: '40vh',
           overflow: 'auto',
         }}
         modules={modules}
@@ -104,6 +108,27 @@ export default function Editor() {
         value={value}
         onChange={setValue}
       />
+      <SyntaxHighlighter
+        language="html"
+        style={anOldHope}
+        showLineNumbers
+        className="highlighter"
+      >
+        {html(value, {
+          indent_size: 4,
+          indent_char: ' ',
+          max_preserve_newlines: 5,
+          preserve_newlines: true,
+
+          indent_scripts: 'normal',
+          wrap_attributes: 'force',
+          end_with_newline: true,
+          wrap_line_length: 120,
+          indent_inner_html: true,
+
+          indent_empty_lines: true,
+        })}
+      </SyntaxHighlighter>
     </>
   );
 }
