@@ -1,61 +1,49 @@
-import 'react-quill/dist/quill.snow.css';
-import '../style/Editor.css';
+import '../style/tinymce.css';
+import { Editor as TinyMceReactEditor } from '@tinymce/tinymce-react';
+import { Editor as TinyMCEEditor } from 'tinymce';
+import { useRef } from 'react';
 
-import { useEffect, useState } from 'react';
+require('tinymce/tinymce');
+require('tinymce/plugins/code/index');
+require('tinymce/themes/silver/index');
+require('tinymce/models/dom/index');
+require('tinymce/icons/default/index');
 
-import ReactQuill from 'react-quill';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { anOldHope } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { html } from 'js-beautify';
-import CustomToolbar, { formats, modules } from './editor/toolbar';
+interface EditorProps {
+  initialContent: string;
+}
+export default function Editor({ initialContent }: EditorProps) {
+  const editorRef = useRef<TinyMCEEditor>();
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current?.getContent());
+    }
+  };
 
-const { electron } = window;
-
-export default function Editor() {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    electron.ipcRenderer.on('new-file', (fileContent) => {
-      setValue(String(fileContent));
-    });
-  }, []);
   return (
     <>
-      <CustomToolbar />
-      <ReactQuill
-        style={{
-          color: 'black',
-          backgroundColor: 'white',
-          maxHeight: '90vh',
-          height: '40vh',
-          overflow: 'auto',
+      <TinyMceReactEditor
+        onInit={(_, editor) => {
+          editorRef.current = editor;
         }}
-        modules={modules}
-        formats={formats}
-        value={value}
-        onChange={setValue}
+        initialValue={initialContent}
+        init={{
+          skin: false,
+          content_css: false,
+          height: '90vh',
+          menubar: false,
+          plugins: 'code',
+          toolbar_mode: 'wrap',
+          toolbar:
+            'fontfamily | blocks | ' +
+            'bold italic underline strikethrough | forecolor fontsize | hr | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | undo redo | code   | help',
+        }}
       />
-      <SyntaxHighlighter
-        language="html"
-        style={anOldHope}
-        showLineNumbers
-        className="highlighter"
-      >
-        {html(value, {
-          indent_size: 4,
-          indent_char: ' ',
-          max_preserve_newlines: 5,
-          preserve_newlines: true,
-
-          indent_scripts: 'normal',
-          wrap_attributes: 'force',
-          end_with_newline: true,
-          wrap_line_length: 120,
-          indent_inner_html: true,
-
-          indent_empty_lines: true,
-        })}
-      </SyntaxHighlighter>
+      <button type="button" onClick={log}>
+        Log editor content
+      </button>
     </>
   );
 }
