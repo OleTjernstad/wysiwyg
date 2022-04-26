@@ -28,6 +28,8 @@
     "*.{css,sass,scss}.d.ts": true
   },
   "cSpell.words": [
-    "tinymce"
+    "Lagre",
+    "tinymce",
+    "Åpne"
   ]
 }

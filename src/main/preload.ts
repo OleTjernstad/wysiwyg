@@ -6,7 +6,7 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.send('ipc-example', 'ping');
     },
     on(channel: string, func: (...args: unknown[]) => void) {
-      const validChannels = ['ipc-example', 'new-file'];
+      const validChannels = ['new-file', 'start-save-file'];
       if (validChannels.includes(channel)) {
         const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
           func(...args);
@@ -14,6 +14,15 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.on(channel, subscription);
 
         return () => ipcRenderer.removeListener(channel, subscription);
+      }
+
+      return undefined;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    send(channel: string, ...args: any[]) {
+      const validChannels = ['save-file'];
+      if (validChannels.includes(channel)) {
+        ipcRenderer.send(channel, ...args);
       }
 
       return undefined;
