@@ -1,5 +1,5 @@
 import { Menu, BrowserWindow } from 'electron';
-import { openFile } from './fileUtils';
+import { openFile, startSaveFile } from './fileUtils';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -42,13 +42,20 @@ export default class MenuBuilder {
   buildDefaultTemplate() {
     const templateDefault = [
       {
-        label: '&File',
+        label: '&Fil',
         submenu: [
           {
-            label: '&Open',
+            label: '&Åpne',
             accelerator: 'Ctrl+O',
             click: () => {
               openFile(this.mainWindow);
+            },
+          },
+          {
+            label: '&Lagre',
+            accelerator: 'Ctrl+S',
+            click: () => {
+              startSaveFile(this.mainWindow);
             },
           },
           {

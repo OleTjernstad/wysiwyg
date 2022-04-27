@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { saveFile } from './fileUtils';
 
 export default class AppUpdater {
   constructor() {
@@ -115,6 +116,10 @@ const createWindow = async () => {
 /**
  * Add event listeners...
  */
+
+ipcMain.on('save-file', async (_, data) => {
+  if (mainWindow) saveFile(mainWindow, data);
+});
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

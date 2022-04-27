@@ -1,16 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Editor from 'renderer/components/editor';
+import { File, isFile } from 'renderer/contracts/file';
 
 const { electron } = window;
 
 export default function EditorScreen() {
-  const [value, setValue] = useState<string>();
+  const [file, setFile] = useState<File>();
 
   useEffect(() => {
-    electron.ipcRenderer.on('new-file', (fileContent) => {
-      setValue(String(fileContent));
+    electron.ipcRenderer.on('new-file', (_file) => {
+      if (!isFile(_file)) return;
+      setFile(_file);
     });
   }, []);
+
   return (
     <div
       style={{
@@ -18,7 +21,7 @@ export default function EditorScreen() {
         height: '100vh',
       }}
     >
-      {value && <Editor initialContent={value} />}
+      {file && <Editor file={file} initialContent={file.content} />}
     </div>
   );
 }

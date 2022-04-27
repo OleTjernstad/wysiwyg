@@ -1,7 +1,10 @@
 import '../style/tinymce.css';
 import { Editor as TinyMceReactEditor } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { File } from 'renderer/contracts/file';
+
+const { electron } = window;
 
 require('tinymce/tinymce');
 require('tinymce/plugins/code/index');
@@ -11,14 +14,25 @@ require('tinymce/icons/default/index');
 
 interface EditorProps {
   initialContent: string;
+  file: File;
 }
-export default function Editor({ initialContent }: EditorProps) {
+export default function Editor({ initialContent, file }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
+
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current?.getContent());
     }
   };
+
+  useEffect(() => {
+    electron.ipcRenderer.on('start-save-file', () => {
+      electron.ipcRenderer.send('save-file', {
+        ...file,
+        content: editorRef.current?.getContent(),
+      });
+    });
+  }, [file]);
 
   return (
     <>
@@ -34,11 +48,12 @@ export default function Editor({ initialContent }: EditorProps) {
           menubar: false,
           plugins: 'code',
           toolbar_mode: 'wrap',
+          statusbar: false,
           toolbar:
             'fontfamily | blocks | ' +
             'bold italic underline strikethrough | forecolor fontsize | hr | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | undo redo | code   | help',
+            'removeformat | undo redo | code ',
         }}
       />
       <button type="button" onClick={log}>
