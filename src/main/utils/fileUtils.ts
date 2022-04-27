@@ -23,8 +23,11 @@ export async function openFile(mainWindow: BrowserWindow) {
   });
 }
 
-export async function startSaveFile(mainWindow: BrowserWindow) {
-  mainWindow.webContents.send('start-save-file');
+export async function startSaveFile(
+  mainWindow: BrowserWindow,
+  isSaveAs: boolean
+) {
+  mainWindow.webContents.send('start-save-file', isSaveAs);
 }
 
 export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
@@ -35,7 +38,11 @@ export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
 
   if (!isFile(data)) return;
 
-  fs.writeFile(data.path, data.content, (err) => {
-    console.log(err);
-  });
+  if (data.path) {
+    fs.writeFile(data.path, data.content, (err) => {
+      console.log(err);
+    });
+  } else {
+    dialog.showSaveDialog(mainWindow);
+  }
 }

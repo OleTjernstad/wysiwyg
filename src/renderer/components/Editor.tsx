@@ -26,9 +26,11 @@ export default function Editor({ initialContent, file }: EditorProps) {
   };
 
   useEffect(() => {
-    electron.ipcRenderer.on('start-save-file', () => {
+    electron.ipcRenderer.on('start-save-file', (isSaveAs) => {
+      console.log(isSaveAs);
       electron.ipcRenderer.send('save-file', {
         ...file,
+        path: isSaveAs ? undefined : file.path,
         content: editorRef.current?.getContent(),
       });
     });

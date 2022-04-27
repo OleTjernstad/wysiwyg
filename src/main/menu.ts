@@ -55,7 +55,14 @@ export default class MenuBuilder {
             label: '&Lagre',
             accelerator: 'Ctrl+S',
             click: () => {
-              startSaveFile(this.mainWindow);
+              startSaveFile(this.mainWindow, false);
+            },
+          },
+          {
+            label: '&Lagre som',
+            accelerator: 'Ctrl+Shift+S',
+            click: () => {
+              startSaveFile(this.mainWindow, true);
             },
           },
           {
