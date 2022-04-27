@@ -1,5 +1,5 @@
 import { Menu, BrowserWindow } from 'electron';
-import { openFile, startSaveFile } from './fileUtils';
+import { openFile, startSaveFile } from './utils/fileUtils';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;

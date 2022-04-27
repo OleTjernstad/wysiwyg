@@ -1,6 +1,6 @@
 import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
-import { isFile } from './contracts/file';
+import { isFile } from '../contracts/file';
 
 export async function openFile(mainWindow: BrowserWindow) {
   const files = await dialog.showOpenDialog(mainWindow, {
