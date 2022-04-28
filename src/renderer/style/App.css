@@ -6,9 +6,17 @@ body {
   position: relative;
   color: white;
   height: 100vh;
-  background: linear-gradient(200.96deg, #f76cc6 51.77%, #c471f2 109.35%);
+  background: linear-gradient(300.96deg, #f76cc6 51.77%, #c471f2 109.35%);
   font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
   justify-content: center;
+}
+
+.MuiTab-textColorPrimary {
+  color: #4a4063 !important;
+  font-weight: bold !important;
+}
+.MuiTabs-indicator {
+  background-color: #4a4063 !important;
 }
