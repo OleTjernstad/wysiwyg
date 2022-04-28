@@ -43,6 +43,15 @@ export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
       console.log(err);
     });
   } else {
-    dialog.showSaveDialog(mainWindow);
+    const res = await dialog.showSaveDialog(mainWindow, {
+      title: 'Lagre som',
+      defaultPath: 'Beskrivelse.html',
+    });
+
+    if (res.canceled || !res.filePath) return;
+
+    fs.writeFile(res.filePath, data.content, (err) => {
+      console.log(err);
+    });
   }
 }
