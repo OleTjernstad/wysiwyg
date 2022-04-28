@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
-import Editor from 'renderer/components/ditor';
+import Editor from 'renderer/components/editor';
 import { File, isFile } from 'renderer/contracts/file';
 
 const { electron } = window;
 
 export default function EditorScreen() {
-  const [file, setFile] = useState<File>();
+  const [files, setFiles] = useState<File[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number>();
 
   useEffect(() => {
     electron.ipcRenderer.on('new-file', (_file) => {
       if (!isFile(_file)) return;
-      setFile(_file);
+      setFiles((prev) => {
+        return [...prev, _file];
+      });
     });
   }, []);
 
   useEffect(() => {
     electron.ipcRenderer.on('start-new-file', () => {
-      setFile({ content: '', name: 'Beskrivelse.html', path: undefined });
+      setFiles((prev) => {
+        return [
+          ...prev,
+          { content: '', name: 'Beskrivelse.html', path: undefined },
+        ];
+      });
     });
   }, []);
 
@@ -27,7 +35,12 @@ export default function EditorScreen() {
         height: '100vh',
       }}
     >
-      {file && <Editor file={file} initialContent={file.content} />}
+      {activeIndex && (
+        <Editor
+          file={files[activeIndex]}
+          initialContent={files[activeIndex].content}
+        />
+      )}
     </div>
   );
 }
