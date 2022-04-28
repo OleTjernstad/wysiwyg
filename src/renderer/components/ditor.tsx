@@ -19,12 +19,6 @@ interface EditorProps {
 export default function Editor({ initialContent, file }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
 
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current?.getContent());
-    }
-  };
-
   useEffect(() => {
     electron.ipcRenderer.on('start-save-file', (isSaveAs) => {
       console.log(isSaveAs);
@@ -58,9 +52,6 @@ export default function Editor({ initialContent, file }: EditorProps) {
             'removeformat | undo redo | code ',
         }}
       />
-      <button type="button" onClick={log}>
-        Log editor content
-      </button>
     </>
   );
 }

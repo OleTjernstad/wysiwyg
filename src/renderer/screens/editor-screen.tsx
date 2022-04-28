@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Editor from 'renderer/components/Editor';
+import Editor from 'renderer/components/ditor';
 import { File, isFile } from 'renderer/contracts/file';
 
 const { electron } = window;
