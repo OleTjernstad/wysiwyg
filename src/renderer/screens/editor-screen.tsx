@@ -14,6 +14,12 @@ export default function EditorScreen() {
     });
   }, []);
 
+  useEffect(() => {
+    electron.ipcRenderer.on('start-new-file', () => {
+      setFile({ content: '', name: 'Beskrivelse.html', path: undefined });
+    });
+  }, []);
+
   return (
     <div
       style={{

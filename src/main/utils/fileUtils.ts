@@ -30,12 +30,11 @@ export async function startSaveFile(
   mainWindow.webContents.send('start-save-file', isSaveAs);
 }
 
-export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
-  // const files = await dialog.showOpenDialog(mainWindow, {
-  //   properties: ['openFile'],
-  //   filters: [{ name: 'Html', extensions: ['htm', 'html', 'txt'] }],
-  // });
+export async function startNewFile(mainWindow: BrowserWindow) {
+  mainWindow.webContents.send('start-new-file');
+}
 
+export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
   if (!isFile(data)) return;
 
   if (data.path) {
@@ -45,7 +44,7 @@ export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
   } else {
     const res = await dialog.showSaveDialog(mainWindow, {
       title: 'Lagre som',
-      defaultPath: 'Beskrivelse.html',
+      defaultPath: data.name,
     });
 
     if (res.canceled || !res.filePath) return;
