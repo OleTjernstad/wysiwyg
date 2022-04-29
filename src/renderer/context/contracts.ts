@@ -2,6 +2,10 @@ import { File } from 'renderer/contracts/file';
 
 export interface ContextInterface {
   files: File[];
-  activeIndex: number;
-  setActiveFile: (i: number) => void;
+  activeId: string | undefined;
+  isEdited: Map<string, boolean>;
+  refreshIndex: number | undefined;
+
+  setActiveFile: (id: string) => void;
+  updateEditedStatus: (id: string, hasBeenEdited: boolean) => void;
 }

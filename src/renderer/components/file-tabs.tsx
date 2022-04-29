@@ -3,16 +3,17 @@ import Tab from '@mui/material/Tab';
 import { useFile } from 'renderer/context/file';
 
 export default function FileSelector() {
-  const { activeIndex, files, setActiveFile } = useFile();
+  const { activeId, files, isEdited, setActiveFile, refreshIndex } = useFile();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setActiveFile(newValue);
   };
 
   return (
     <Tabs
       sx={{ marginBottom: '8px' }}
-      value={activeIndex}
+      value={activeId}
+      key={refreshIndex}
       indicatorColor="primary"
       textColor="primary"
       onChange={handleChange}
@@ -20,9 +21,13 @@ export default function FileSelector() {
       scrollButtons="auto"
       aria-label="scrollable auto tabs example"
     >
-      {files.map((f, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Tab sx={{ textTransform: 'none' }} key={i} value={i} label={f.name} />
+      {files.map((f) => (
+        <Tab
+          sx={{ textTransform: 'none' }}
+          key={f.id}
+          value={f.id}
+          label={isEdited.get(f.id) ? `${f.name} *` : f.name}
+        />
       ))}
     </Tabs>
   );

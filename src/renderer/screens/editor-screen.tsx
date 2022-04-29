@@ -1,9 +1,17 @@
+import { useEffect, useState } from 'react';
 import Editor from 'renderer/components/editor';
 import FileSelector from 'renderer/components/file-tabs';
 import { useFile } from 'renderer/context/file';
+import { File } from 'renderer/contracts/file';
 
 export default function EditorScreen() {
-  const { activeIndex, files } = useFile();
+  const { activeId, files } = useFile();
+  const [selectedFile, setSelectedFile] = useState<File>();
+
+  useEffect(() => {
+    const file = files.find((f) => f.id === activeId);
+    if (file) setSelectedFile(file);
+  }, [activeId, files]);
 
   return (
     <div
@@ -13,12 +21,7 @@ export default function EditorScreen() {
       }}
     >
       <FileSelector />
-      {files.length > 0 && (
-        <Editor
-          file={files[activeIndex]}
-          initialContent={files[activeIndex].content}
-        />
-      )}
+      {selectedFile && activeId && <Editor file={selectedFile} />}
     </div>
   );
 }
