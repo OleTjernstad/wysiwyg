@@ -22,11 +22,15 @@ body {
   background-color: #4a4063 !important;
 }
 
+.MuiAppBar-colorPrimary {
+  background-color: #4a4063 !important;
+}
+
 #menu-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: 35px;
   background: #4a4063;
   -webkit-app-region: drag;
 }

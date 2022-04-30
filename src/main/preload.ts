@@ -5,6 +5,9 @@ contextBridge.exposeInMainWorld('electron', {
     myPing() {
       ipcRenderer.send('ipc-example', 'ping');
     },
+    openMenu(x: number, y: number) {
+      ipcRenderer.send(`display-app-menu`, { x, y });
+    },
     on(channel: string, func: (...args: unknown[]) => void) {
       const validChannels = ['new-file', 'start-save-file', 'start-new-file'];
       if (validChannels.includes(channel)) {

@@ -3,6 +3,7 @@ declare global {
     electron: {
       ipcRenderer: {
         myPing(): void;
+        openMenu(x: number, y: number): void;
         on(
           channel: string,
           func: (...args: unknown[]) => void

@@ -42,45 +42,34 @@ export default class MenuBuilder {
   buildDefaultTemplate() {
     const templateDefault = [
       {
-        label: '&Fil',
-        submenu: [
-          {
-            label: '&Ny',
-            accelerator: 'Ctrl+N',
-            click: () => {
-              startNewFile(this.mainWindow);
-            },
-          },
-          {
-            label: '&Åpne',
-            accelerator: 'Ctrl+O',
-            click: () => {
-              openFile(this.mainWindow);
-            },
-          },
-          {
-            label: '&Lagre',
-            accelerator: 'Ctrl+S',
-            click: () => {
-              startSaveFile(this.mainWindow, false);
-            },
-          },
-          {
-            label: '&Lagre som',
-            accelerator: 'Ctrl+Shift+S',
-            click: () => {
-              startSaveFile(this.mainWindow, true);
-            },
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              this.mainWindow.close();
-            },
-          },
-        ],
+        label: '&Ny',
+        accelerator: 'Ctrl+N',
+        click: () => {
+          startNewFile(this.mainWindow);
+        },
       },
+      {
+        label: '&Åpne',
+        accelerator: 'Ctrl+O',
+        click: () => {
+          openFile(this.mainWindow);
+        },
+      },
+      {
+        label: '&Lagre',
+        accelerator: 'Ctrl+S',
+        click: () => {
+          startSaveFile(this.mainWindow, false);
+        },
+      },
+      {
+        label: '&Lagre som',
+        accelerator: 'Ctrl+Shift+S',
+        click: () => {
+          startSaveFile(this.mainWindow, true);
+        },
+      },
+
       {
         label: '&View',
         submenu:
@@ -122,6 +111,13 @@ export default class MenuBuilder {
                   },
                 },
               ],
+      },
+      {
+        label: '&Close',
+        accelerator: 'Ctrl+W',
+        click: () => {
+          this.mainWindow.close();
+        },
       },
     ];
 

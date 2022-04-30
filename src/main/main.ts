@@ -1,5 +1,9 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 
+import { BrowserWindow, app, ipcMain, shell } from 'electron';
+
+import { autoUpdater } from 'electron-updater';
+import log from 'electron-log';
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -9,9 +13,6 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './utils/util';
 import { saveFile } from './utils/fileUtils';
@@ -25,6 +26,7 @@ export default class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let menu: Electron.CrossProcessExports.Menu | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -101,7 +103,7 @@ const createWindow = async () => {
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  menu = menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
@@ -120,6 +122,17 @@ const createWindow = async () => {
 
 ipcMain.on('save-file', async (_, data) => {
   if (mainWindow) saveFile(mainWindow, data);
+});
+
+// Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that position.
+ipcMain.on(`display-app-menu`, (_, args) => {
+  if (mainWindow && menu) {
+    menu.popup({
+      window: mainWindow,
+      x: args.x,
+      y: args.y,
+    });
+  }
 });
 
 app.on('window-all-closed', () => {
