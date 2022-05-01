@@ -31,7 +31,7 @@ contextBridge.exposeInMainWorld('electron', {
       return undefined;
     },
     once(channel: string, func: (...args: unknown[]) => void) {
-      const validChannels = ['ipc-example'];
+      const validChannels = ['ipc-example', 'save-file'];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
         ipcRenderer.once(channel, (_event, ...args) => func(...args));

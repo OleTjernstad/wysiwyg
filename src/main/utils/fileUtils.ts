@@ -34,9 +34,13 @@ export async function startNewFile(mainWindow: BrowserWindow) {
   mainWindow.webContents.send('start-new-file');
 }
 
-export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
+export async function saveFile(
+  mainWindow: BrowserWindow,
+  event: Electron.IpcMainEvent,
+  data: unknown
+) {
   if (!isFile(data)) return;
-
+  console.log({ data });
   if (data.path) {
     fs.writeFile(data.path, data.content, (err) => {
       console.log(err);
@@ -49,8 +53,18 @@ export async function saveFile(mainWindow: BrowserWindow, data: unknown) {
 
     if (res.canceled || !res.filePath) return;
 
-    fs.writeFile(res.filePath, data.content, (err) => {
-      console.log(err);
+    const pathArray = res.filePath.split('\\');
+    const lastIndex = pathArray.length - 1;
+    const fileName = pathArray[lastIndex];
+
+    const saveName = fileName.match(/\.\w*$/) ? fileName : `${fileName}.html`;
+
+    const path = res.filePath.replace(/\w*$/, saveName);
+
+    fs.writeFile(path, data.content, (err) => {
+      console.log({ err });
     });
+
+    event.reply('save-file', { ...data, path, name: saveName });
   }
 }

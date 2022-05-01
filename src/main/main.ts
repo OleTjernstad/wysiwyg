@@ -120,8 +120,8 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
-ipcMain.on('save-file', async (_, data) => {
-  if (mainWindow) saveFile(mainWindow, data);
+ipcMain.on('save-file', async (event, data) => {
+  if (mainWindow) saveFile(mainWindow, event, data);
 });
 
 // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that position.

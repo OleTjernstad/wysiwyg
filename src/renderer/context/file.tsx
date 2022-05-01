@@ -57,6 +57,22 @@ export const FileContextProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    electron.ipcRenderer.once('save-file', (arg) => {
+      if (!isFile(arg)) return;
+
+      setFiles((fs) => {
+        return fs.map((f) => {
+          if (f.id === arg.id) {
+            return arg;
+          }
+          return f;
+        });
+      });
+      console.log({ arg });
+    });
+  }, []);
+
   return (
     <context.Provider
       value={{

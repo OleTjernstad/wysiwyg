@@ -23,6 +23,7 @@ export default function Editor({ file }: EditorProps) {
 
   useEffect(() => {
     electron.ipcRenderer.on('start-save-file', (isSaveAs) => {
+      console.log('start-save-file');
       electron.ipcRenderer.send('save-file', {
         ...file,
         path: isSaveAs ? undefined : file.path,
@@ -46,7 +47,7 @@ export default function Editor({ file }: EditorProps) {
         init={{
           skin: false,
           content_css: false,
-          height: '90vh',
+          height: '85vh',
           menubar: false,
           plugins: 'code',
           toolbar_mode: 'wrap',

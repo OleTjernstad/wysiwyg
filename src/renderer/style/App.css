@@ -25,23 +25,3 @@ body {
 .MuiAppBar-colorPrimary {
   background-color: #4a4063 !important;
 }
-
-#menu-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 35px;
-  background: #4a4063;
-  -webkit-app-region: drag;
-}
-
-#menu-bar > div {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.menubar-btn {
-  -webkit-app-region: no-drag;
-}
