@@ -68,6 +68,10 @@ export async function saveFile(
       console.log({ err });
     });
 
-    event.reply('save-file', { ...data, path, name: saveName });
+    event.reply('save-file', {
+      ...data,
+      path,
+      name: regMatch === null ? fileName : `${regMatch[2]}.html`,
+    });
   }
 }
