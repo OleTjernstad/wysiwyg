@@ -22,15 +22,21 @@ export default function Editor({ file }: EditorProps) {
   const { updateEditedStatus } = useFile();
 
   useEffect(() => {
-    electron.ipcRenderer.on('start-save-file', (isSaveAs) => {
-      console.log('start-save-file');
-      electron.ipcRenderer.send('save-file', {
-        ...file,
-        path: isSaveAs ? undefined : file.path,
-        content: editorRef.current?.getContent(),
-      });
-      updateEditedStatus(file.id, false);
-    });
+    const removeListener = electron.ipcRenderer.on(
+      'start-save-file',
+      (isSaveAs) => {
+        electron.ipcRenderer.send('save-file', {
+          ...file,
+          path: isSaveAs ? undefined : file.path,
+          content: editorRef.current?.getContent(),
+        });
+        updateEditedStatus(file.id, false);
+      }
+    );
+
+    return () => {
+      if (removeListener) removeListener();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
 

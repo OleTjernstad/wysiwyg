@@ -32,7 +32,7 @@ export const FileContextProvider = ({
   };
 
   useEffect(() => {
-    electron.ipcRenderer.on('new-file', (_file) => {
+    const removeListener = electron.ipcRenderer.on('new-file', (_file) => {
       const id = uuidv4();
       if (!isFile(_file)) return;
       setFiles((prev) => {
@@ -40,10 +40,13 @@ export const FileContextProvider = ({
       });
       setActiveId(id);
     });
+    return () => {
+      if (removeListener) removeListener();
+    };
   }, []);
 
   useEffect(() => {
-    electron.ipcRenderer.on('start-new-file', () => {
+    const removeListener = electron.ipcRenderer.on('start-new-file', () => {
       const id = uuidv4();
       setFiles((prev) => {
         return [
@@ -54,6 +57,9 @@ export const FileContextProvider = ({
       updateEditedStatus(id, true);
       setActiveId(id);
     });
+    return () => {
+      if (removeListener) removeListener();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,7 +75,6 @@ export const FileContextProvider = ({
           return f;
         });
       });
-      console.log({ arg });
     });
   }, []);
 

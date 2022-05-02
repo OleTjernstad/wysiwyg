@@ -57,9 +57,12 @@ export async function saveFile(
     const lastIndex = pathArray.length - 1;
     const fileName = pathArray[lastIndex];
 
-    const saveName = fileName.match(/\.\w*$/) ? fileName : `${fileName}.html`;
+    const regMatch = res.filePath.match(/([\\/])([^/`.\\]*)$/);
 
-    const path = res.filePath.replace(/\w*$/, saveName);
+    const saveName =
+      regMatch === null ? fileName : `${regMatch[1]}${regMatch[2]}.html`;
+
+    const path = res.filePath.replace(/[\\/][^/`.\\]*$/, saveName);
 
     fs.writeFile(path, data.content, (err) => {
       console.log({ err });
