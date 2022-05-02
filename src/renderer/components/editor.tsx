@@ -4,6 +4,8 @@ import { Editor as TinyMCEEditor } from 'tinymce';
 import { useEffect, useRef } from 'react';
 import { File } from 'renderer/contracts/file';
 import { useFile } from 'renderer/context/file';
+import toast from 'react-hot-toast';
+import { Button } from '@mui/material';
 
 const { electron } = window;
 
@@ -16,10 +18,16 @@ require('tinymce/icons/default/index');
 interface EditorProps {
   file: File;
 }
+
 export default function Editor({ file }: EditorProps) {
   const editorRef = useRef<TinyMCEEditor>();
 
   const { updateEditedStatus } = useFile();
+
+  function copyContentToClipboard() {
+    electron.clipboard(editorRef.current?.getContent() ?? '');
+    toast('html kopiert til utklippstavle');
+  }
 
   useEffect(() => {
     const removeListener = electron.ipcRenderer.on(
@@ -53,7 +61,7 @@ export default function Editor({ file }: EditorProps) {
         init={{
           skin: false,
           content_css: false,
-          height: '85vh',
+          height: '80vh',
           menubar: false,
           plugins: 'code',
           toolbar_mode: 'wrap',
@@ -62,6 +70,9 @@ export default function Editor({ file }: EditorProps) {
             'fontfamily | blocks | bold italic underline strikethrough | forecolor fontsize | hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | undo redo | code ',
         }}
       />
+      <Button variant="contained" onClick={() => copyContentToClipboard()}>
+        Kopier html
+      </Button>
     </>
   );
 }

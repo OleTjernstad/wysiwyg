@@ -1,4 +1,9 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import {
+  contextBridge,
+  ipcRenderer,
+  IpcRendererEvent,
+  clipboard,
+} from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -37,5 +42,8 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.once(channel, (_event, ...args) => func(...args));
       }
     },
+  },
+  clipboard(text: string) {
+    clipboard.writeText(text);
   },
 });

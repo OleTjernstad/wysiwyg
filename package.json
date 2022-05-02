@@ -212,6 +212,7 @@
     "js-beautify": "^1.14.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hot-toast": "^2.2.0",
     "react-router-dom": "^6.3.0",
     "react-syntax-highlighter": "^15.5.0",
     "tinymce": "^6.0.1",
