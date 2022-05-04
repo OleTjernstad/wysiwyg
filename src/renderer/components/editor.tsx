@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 const { electron } = window;
 
 require('tinymce/tinymce');
+require('@tjernstad-utvikling/geo-image/dist/plugin');
 require('tinymce/plugins/code/index');
 require('tinymce/themes/silver/index');
 require('tinymce/models/dom/index');
@@ -63,11 +64,11 @@ export default function Editor({ file }: EditorProps) {
           content_css: false,
           height: '80vh',
           menubar: false,
-          plugins: 'code',
+          plugins: 'code geo-image',
           toolbar_mode: 'wrap',
           statusbar: false,
           toolbar:
-            'fontfamily | blocks | bold italic underline strikethrough | forecolor fontsize | hr | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | undo redo | code ',
+            'fontfamily | blocks | bold italic underline strikethrough | forecolor fontsize | hr geo-image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | undo redo | code ',
         }}
       />
       <Button variant="contained" onClick={() => copyContentToClipboard()}>
