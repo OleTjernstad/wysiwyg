@@ -76,6 +76,8 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
+    fullscreenable: true,
+    minimizable: true,
     titleBarStyle: 'hidden',
     icon: getAssetPath('icon.png'),
     webPreferences: {
@@ -122,6 +124,32 @@ const createWindow = async () => {
 
 ipcMain.on('save-file', async (event, data) => {
   if (mainWindow) saveFile(mainWindow, event, data);
+});
+ipcMain.on('window-operations', async (_, operation) => {
+  if (mainWindow) {
+    switch (operation) {
+      case 'close':
+        mainWindow.close();
+        break;
+      case 'maximize':
+        if (mainWindow.isMaximized()) {
+          mainWindow.unmaximize();
+        } else {
+          mainWindow.maximize();
+        }
+        mainWindow.webContents.send(
+          'update-maximized',
+          mainWindow.isMaximized()
+        );
+        break;
+      case 'minimize':
+        mainWindow.minimize();
+        break;
+
+      default:
+        break;
+    }
+  }
 });
 
 // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that position.

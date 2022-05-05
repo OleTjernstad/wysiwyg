@@ -14,7 +14,12 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.send(`display-app-menu`, { x, y });
     },
     on(channel: string, func: (...args: unknown[]) => void) {
-      const validChannels = ['new-file', 'start-save-file', 'start-new-file'];
+      const validChannels = [
+        'new-file',
+        'start-save-file',
+        'start-new-file',
+        'update-maximized',
+      ];
       if (validChannels.includes(channel)) {
         const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
           func(...args);
@@ -28,7 +33,7 @@ contextBridge.exposeInMainWorld('electron', {
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     send(channel: string, ...args: any[]) {
-      const validChannels = ['save-file'];
+      const validChannels = ['save-file', 'window-operations'];
       if (validChannels.includes(channel)) {
         ipcRenderer.send(channel, ...args);
       }
@@ -36,7 +41,7 @@ contextBridge.exposeInMainWorld('electron', {
       return undefined;
     },
     once(channel: string, func: (...args: unknown[]) => void) {
-      const validChannels = ['ipc-example', 'save-file'];
+      const validChannels = ['ipc-example', 'save-file', 'window-operations'];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
         ipcRenderer.once(channel, (_event, ...args) => func(...args));
