@@ -27,12 +27,13 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         run: |
           npm install
 
       - name: Publish releases
         env:
-     
           # This is used for uploading release assets to github
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
