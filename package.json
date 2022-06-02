@@ -1,5 +1,5 @@
 {
-  "name": "@tjernstad-utvikling/wysiwyg",
+  "name": "@tjernstad-utvikling/geohtml",
   "description": "Tool for making geocaching descriptions",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -31,8 +31,8 @@
     ]
   },
   "build": {
-    "productName": "wysiwyg",
-    "appId": "no.tjernstad.wysiwyg",
+    "productName": "geohtml",
+    "appId": "no.tjernstad.geohtml",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -91,12 +91,12 @@
     "publish": {
       "provider": "github",
       "owner": "tjernstad-utvikling",
-      "repo": "wysiwyg"
+      "repo": "geohtml"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tjernstad-utvikling/wysiwyg.git"
+    "url": "git+https://github.com/tjernstad-utvikling/geohtml.git"
   },
   "author": {
     "name": "Ole Tjernstad",
@@ -106,7 +106,7 @@
   "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tjernstad-utvikling/wysiwyg/issues"
+    "url": "https://github.com/tjernstad-utvikling/geohtml/issues"
   },
   "keywords": [
     "electron",
@@ -119,7 +119,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/tjernstad-utvikling/wysiwyg#readme",
+  "homepage": "https://github.com/tjernstad-utvikling/geohtml#readme",
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.5",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
