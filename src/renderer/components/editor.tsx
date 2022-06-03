@@ -12,6 +12,8 @@ const { electron } = window;
 require('tinymce/tinymce');
 require('@tjernstad-utvikling/geo-image/dist/plugin');
 require('tinymce/plugins/code/index');
+require('tinymce/plugins/table/index');
+require('tinymce/plugins/lists/index');
 require('tinymce/themes/silver/index');
 require('tinymce/models/dom/index');
 require('tinymce/icons/default/index');
@@ -64,11 +66,11 @@ export default function Editor({ file }: EditorProps) {
           content_css: false,
           height: '80vh',
           menubar: false,
-          plugins: 'code geo-image',
+          plugins: 'code geo-image table lists',
           toolbar_mode: 'wrap',
           statusbar: false,
           toolbar:
-            'fontfamily | blocks | bold italic underline strikethrough | forecolor fontsize | hr geo-image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | undo redo | code ',
+            'fontfamily | blocks | bold italic underline strikethrough | table numlist bullist | forecolor fontsize | hr geo-image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | undo redo | code ',
         }}
       />
       <Button variant="contained" onClick={() => copyContentToClipboard()}>
