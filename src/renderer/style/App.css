@@ -25,3 +25,7 @@ body {
 .MuiAppBar-colorPrimary {
   background-color: #4a4063 !important;
 }
+
+.MuiButton-contained {
+  background-color: #4a4063 !important;
+}
