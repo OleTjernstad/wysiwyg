@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { File, isFile } from 'renderer/contracts/file';
 import { ContextInterface } from './contracts';

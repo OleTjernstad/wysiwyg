@@ -4,24 +4,18 @@ import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import EditorScreen from './screens/editor-screen';
 import { FileContextProvider } from './context/file';
 import AppBar from './components/app-bar';
-import logo from '../../assets/logo.png';
+import StartScreen from './screens/start-screen';
 
 export default function App() {
   return (
     <>
       <Toaster />
       <AppBar />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <img
-          src={logo}
-          style={{ height: '40vmin', marginTop: '5vh' }}
-          alt="logo"
-        />
-      </div>
       <FileContextProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<EditorScreen />} />
+            <Route path="/" element={<StartScreen />} />
+            <Route path="/edit" element={<EditorScreen />} />
           </Routes>
         </Router>
       </FileContextProvider>
