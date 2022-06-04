@@ -32,7 +32,7 @@
   },
   "build": {
     "productName": "geohtml",
-    "appId": "no.tjernstad.geohtml",
+    "appId": "no.geohtml.app",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -71,8 +71,15 @@
     },
     "win": {
       "target": [
-        "nsis"
+        "appx"
       ]
+    },
+    "appx": {
+      "displayName": "GeoHtml",
+      "publisherDisplayName": "Tjernstad Utvikling",
+      "publisher": "CN=4D536ADB-2C4A-47F5-92C2-EB7C15EFFE93",
+      "identityName": "61760TjernstadUtvikling.GeoHtml",
+      "applicationId": "no.geohtml.app"
     },
     "linux": {
       "target": [
@@ -86,7 +93,8 @@
       "output": "release/build"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      "./appx/**"
     ],
     "publish": {
       "provider": "github",

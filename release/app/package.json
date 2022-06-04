@@ -1,6 +1,6 @@
 {
-  "name": "@tjernstad-utvikling/geohtml",
-  "version": "0.1.0",
+  "name": "geohtml",
+  "version": "0.2.0",
   "description": "Wysiwyg geocaching descriptions",
   "main": "./dist/main/main.js",
   "author": {
